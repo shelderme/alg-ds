@@ -1,3 +1,3 @@
 Lab A10
-Реализовать стек с помощью связного списка
-Реализовать стек с помощью массива
+implement a stack usig array
+implement a stack usig linked list
