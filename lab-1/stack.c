@@ -48,6 +48,8 @@ void DestroyArrayStack(ArrayStack_t* stack) {
 
 ListStack_t* CreateListStack() {
 	ListStack_t* stack = (ListStack_t*)malloc(sizeof(ListStack_t));
+	if (stack == NULL) 
+		return NULL;
 	stack->prev = NULL;
 	return stack;
 }
