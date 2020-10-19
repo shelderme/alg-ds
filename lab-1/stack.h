@@ -31,6 +31,8 @@ typedef struct ListStack {
 
 struct ListStack* CreateListStack();
 
+struct ListStack* CreateLinkedListStack();
+
 void PushListStack(ListStack_t** stack, int newData);
 
 int PopListStack(ListStack_t** stack);
