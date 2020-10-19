@@ -61,26 +61,23 @@ TEST(PushListStack, AddingFewElem) {
 }
 
 
-TEST(PopListStack, PopTest_RetunsLastElem) {
-    ListStack_t* stek = CreateListStack();
-    PushListStack(&stek, 23);
-    PushListStack(&stek, 433);
-    int elem = PopListStack(&stek);
-    ASSERT_EQ(433, elem);
-}
-
-TEST(PopListStack, UnderflowAttempt) {
-    ListStack_t* stek = CreateListStack();
-    PushListStack(&stek, 23);
-    int elem1 = PopListStack(&stek);
-    int elem2 = PopListStack(&stek);
-    ASSERT_EQ(-3, elem2);
-}
 
 TEST(PopListStack, PopPushInteraction_ReturnPushedElement) {
     ListStack_t* stek = CreateListStack();
-    int newElem = 5, oldElem;
-    PushListStack(&stek, newElem);
-    oldElem = PopListStack(&stek);
-    ASSERT_EQ(newElem, oldElem);
+    ListStack_t* newElem = CreateListStack();
+    newElem->data = 1;
+    newElem->prev = stek;
+    stek = newElem;
+    EXPECT_TRUE(PopListStack(&stek) == 1);
+    EXPECT_TRUE(stek->prev == NULL);
+}
+
+TEST(PushPopListTest, PushAndPop) {
+    ListStack_t* stek = CreateLinkedListStack();
+    PushListStack(&stek, 1);
+    PushListStack(&stek, 2);
+    PushListStack(&stek, 3);
+    EXPECT_TRUE(PopListStack(&stek) == 3);
+    EXPECT_TRUE(PopListStack(&stek) == 2);
+    EXPECT_TRUE(stek->prev->prev == NULL);
 }
