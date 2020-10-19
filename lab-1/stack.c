@@ -10,6 +10,8 @@ const int capacity = 10;
 // Creats a stack 
 ArrayStack_t* CreateArrayStack() {
 	ArrayStack_t* stack = (ArrayStack_t*)malloc(sizeof(ArrayStack_t));
+	if (stack == NULL)
+		return NULL;
 	stack->top = 0;
 	stack->size = capacity;
 	stack->data = (int*)malloc(sizeof(int) * capacity);
@@ -77,4 +79,14 @@ void DestroyListStack(ListStack_t** stek) {
 	while ((*stek) != NULL) {
 		PopListStack(&stek);
 	}
+}
+
+struct ListStack* CreateLinkedListStack()
+{
+	ListStack_t* stek = (ListStack_t*)malloc(sizeof(ListStack_t));
+	if (stek) {
+		stek->data = 0;
+		stek->prev = 0;
+	}
+	return stek;
 }
