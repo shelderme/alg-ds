@@ -9,53 +9,59 @@ TEST(TestCaseName, TestName) {
 }
 
 TEST(PushArrayStack, AddingElem) {
+    error_t err = ERROR_NO;
     int arr[3];
     ArrayStack_t stek = { arr, 0, 3 };
-    PushArrayStack(&stek, 5);
+    PushArrayStack(&stek, 5, &err);
     int b;
     b = stek.data[stek.top - 1];
     ASSERT_EQ(5, b);
 }
 
 TEST(PushArrayStack, AddingFewElements) {
+    error_t err = ERROR_NO;
     int arr[3] = {2, 3};
     ArrayStack_t stek = { arr, 2, 3 };
-    PushArrayStack(&stek, 5);
+    PushArrayStack(&stek, 5, &err);
     int b;
     b = stek.data[stek.top - 1];
     ASSERT_EQ(5, b);
 }
 
 TEST(PopArrayStack, PopTest_RetunsLastElem) {
+    error_t err = ERROR_NO;
     int arr[3] = { 2, 3, 4 };
     ArrayStack_t stek = { arr, 3, 3 };
   
-    int b = PopArrayStack(&stek);
+    int b = PopArrayStack(&stek, &err);
     ASSERT_EQ(4, b);
 }
 
 TEST(PopArrayStack, PopTest_UnderflowAttempt) {
     int arr[1] = { 2 };
+    error_t err = ERROR_NO;
     ArrayStack_t stek = { arr, 1, 1 };
-    int a = PopArrayStack(&stek);
-    int b = PopArrayStack(&stek);
-    ASSERT_EQ(-3, b);
+    int a = PopArrayStack(&stek, &err);
+    int b = PopArrayStack(&stek, &err);
+    ASSERT_EQ(0, b);
 }
 
 TEST(PushArrayList, AddingElem) {
     ListStack_t *stek = NULL;
-    stek = CreateListStack();
-    PushListStack(&stek, 23);
+    error_t err = ERROR_NO;
+    stek = CreateListStack(&err);
+    PushListStack(&stek, 23, &err);
     int elem = stek->data;
     ASSERT_EQ(23, elem);
 }
 
 TEST(PushListStack, AddingFewElem) {
+    error_t err = ERROR_NO;
     ListStack_t* stek = NULL;
-    stek = CreateListStack();
-    PushListStack(&stek, 23);
-    PushListStack(&stek, 433);
-    PushListStack(&stek, 54);
+    stek = CreateListStack(&err);
+    PushListStack(&stek, 23, &err);
+    PushListStack(&stek, 433, &err);
+    PushListStack(&stek, 54, &err);
     int elem = stek->data;
     ASSERT_EQ(54, elem);
 }
@@ -63,21 +69,13 @@ TEST(PushListStack, AddingFewElem) {
 
 
 TEST(PopListStack, PopPushInteraction_ReturnPushedElement) {
-    ListStack_t* stek = CreateListStack();
-    ListStack_t* newElem = CreateListStack();
+    error_t err = ERROR_NO;
+    ListStack_t* stek = CreateListStack(&err);
+    ListStack_t* newElem = CreateListStack(&err);
     newElem->data = 1;
     newElem->prev = stek;
     stek = newElem;
-    EXPECT_TRUE(PopListStack(&stek) == 1);
+    EXPECT_TRUE(PopListStack(&stek, &err) == 1);
     EXPECT_TRUE(stek->prev == NULL);
 }
 
-TEST(PushPopListTest, PushAndPop) {
-    ListStack_t* stek = CreateLinkedListStack();
-    PushListStack(&stek, 1);
-    PushListStack(&stek, 2);
-    PushListStack(&stek, 3);
-    EXPECT_TRUE(PopListStack(&stek) == 3);
-    EXPECT_TRUE(PopListStack(&stek) == 2);
-    EXPECT_TRUE(stek->prev->prev == NULL);
-}
