@@ -2,7 +2,7 @@
 
 typedef enum {
 	ERROR_NO,
-	STACK_OVERFLOW = -4,
+	STACK_OVERFLOW,
 	STACK_UNDERFLOW,
 	OUT_OF_MEMORY,
 	STACK_IS_EMPTY
@@ -14,11 +14,11 @@ typedef struct ArrayStack {
 	int size;
 } ArrayStack_t;
 
-ArrayStack_t* CreateArrayStack();
+ArrayStack_t* CreateArrayStack(error_t* err);
 
-int PopArrayStack(ArrayStack_t* stack);
+int PopArrayStack(ArrayStack_t* stack, error_t* err);
 
-void PushArrayStack(ArrayStack_t* stack, int elem);
+void PushArrayStack(ArrayStack_t* stack, int elem, error_t* err);
 
 void DestroyArrayStack(ArrayStack_t* stack);
 
@@ -29,12 +29,12 @@ typedef struct ListStack {
 	struct ListStack* prev;
 } ListStack_t;
 
-struct ListStack* CreateListStack();
+struct ListStack* CreateListStack(error_t* err);
 
-struct ListStack* CreateLinkedListStack();
+struct ListStack* CreateLinkedListStack(error_t* err);
 
-void PushListStack(ListStack_t** stack, int newData);
+void PushListStack(ListStack_t** stack, int newData, error_t*err);
 
-int PopListStack(ListStack_t** stack);
+int PopListStack(ListStack_t** stack, error_t* err);
 
-void DestroyListStack(ListStack_t** stack);
+void DestroyListStack(ListStack_t** stack, error_t* err);
