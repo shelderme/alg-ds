@@ -1,3 +1,3 @@
-Lab A10
-implement a stack using array
-implement a stack using linked list
+Lab B14
+implement a memory management system using linked list and strategy "best fit"
+compare malloc/free and your implementations
