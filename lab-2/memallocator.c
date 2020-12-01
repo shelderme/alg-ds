@@ -6,6 +6,23 @@
 char* memory = NULL;
 int memSize = 0;
 
+#define ALL_IS_OK 0
+#define KEY 777
+#define NULL_MEM 2
+#define TOO_SMALL_SIZE 3
+
+
+typedef struct NodeHeader {
+	int size;
+	int num; // for checking validness of pointer
+	struct NodeHeader* next;
+} nodeHeader_t;
+
+typedef struct NodeEnder {
+	int size;
+} nodeEnder_t;
+
+nodeHeader_t* theFirst;
 
 int memgetminimumsize() {
 	return sizeof(nodeHeader_t) + sizeof(nodeEnder_t);
@@ -84,7 +101,7 @@ void* memalloc(int size) {
 void memfree(void* p) {
 	nodeHeader_t* head;
 	nodeEnder_t* end;
-	nodeHeader_t* prevHead, * nextHead, * tmp;
+	nodeHeader_t* prevHead, * nextHead, ** tmp;
 	nodeEnder_t* prevEnd, * nextEnd;
 
 	if (p == NULL || (char*)p < (char*)memory || (char*)p >= (char*)memory + memSize)
@@ -117,13 +134,13 @@ void memfree(void* p) {
 		head->size = nextHead->size + head->size + memgetminimumsize();
 		nextHead->num = -1;
 		nextEnd->size = head->size;
-		tmp = theFirst;
-		while (tmp->next != NULL && tmp->next != nextHead) {
-			tmp = tmp->next;
+		tmp = &theFirst;
+		while (*tmp != NULL && (*tmp) != nextHead) {
+			tmp = &(*tmp)->next;
 		}
 
-		if (tmp->next && (tmp->next)->next) {
-			tmp->next = (tmp->next)->next;
+		if (*tmp == nextHead) {
+			*tmp = (*tmp)->next;
 		}
 	}
 }
