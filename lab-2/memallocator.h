@@ -1,22 +1,4 @@
 #pragma once
-
-#define ALL_IS_OK 0
-#define KEY 777
-#define NULL_MEM 2
-#define TOO_SMALL_SIZE 3
-
-
-typedef struct NodeHeader {
-    int size;
-    int num; // for checking validness of pointer
-    struct NodeHeader* next;
-} nodeHeader_t;
-
-typedef struct NodeEnder {
-    int size;
-} nodeEnder_t;
-
-nodeHeader_t* theFirst;
     // Init memory system with memory block pMemory.
     int meminit(void* pMemory, int size);
 
