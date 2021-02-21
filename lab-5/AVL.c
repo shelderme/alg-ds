@@ -124,17 +124,19 @@ node_t* FindNodeByKey(node_t* p, int k) {
 
 // reading string
 char* ReadStr() {
-	int i = 0;
-	char* str = (char*)malloc(sizeof(char)), * tmp = NULL;
+	int i = 0, size = 2;
+	int block = 8;
+	char* str = (char*)malloc(sizeof(char) * size), * tmp = NULL;
 	if (str == NULL)
 		return NULL;
 	while ((str[i++] = fgetc(stdin)) != EOF) {
-		tmp = realloc(str, (i + 1) * sizeof(char));
-		if (tmp != NULL) {
-			str = tmp;
-		}
-		else {
-			return NULL;
+		if (i >= size) {
+			size += block;
+			tmp = realloc(str, (size) * sizeof(char));
+			if (tmp)
+				str = tmp;
+			else
+				return NULL;
 		}
 	}
 	str[i - 1] = 0;
